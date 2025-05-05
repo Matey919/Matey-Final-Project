@@ -32,7 +32,7 @@ const music_list = [
     {
         img : 'asset/images/My kind of love with carmody.jpg',
         name : 'My kind of love (with carmody)',
-        artist : 'Connor ALBERT, Carmody',
+        artist : 'Connor Albert, Carmody',
         music : 'asset/music/My-Kind-of-Love-_with-Carmody_-_p_.mp3'
     },
     {
@@ -66,7 +66,6 @@ function loadTrack(track_index){
     updateTimer = setInterval(setUpdate, 1000);
 
     curr_track.addEventListener('ended', nextTrack);
-    random_bg_color();
 }
 
 function reset(){
@@ -74,3 +73,67 @@ function reset(){
     total_duration.textContent = "00:00";
     seek_slider.value = 0;
 }
+function repeatTrack(){
+    let current_index = track_index;
+    loadTrack(current_index);
+    playTrack();
+}
+function playpauseTrack(){
+    isPlaying ? pauseTrack() : playTrack();
+}
+function playTrack(){
+    curr_track.play();
+    isPlaying = true;
+    track_art.classList.add('rotate');
+    playpause_btn.innerHTML = '<i class="fa fa-pause-circle fa-5x"></i>';
+}
+function pauseTrack(){
+    curr_track.pause();
+    isPlaying = false;
+    track_art.classList.remove('rotate');
+    playpause_btn.innerHTML = '<i class="fa fa-play-circle fa-5x"></i>';
+}
+function nextTrack(){
+    if(track_index < music_list.length - 1 && isRandom === false){
+        track_index += 1;
+    }else if(track_index < music_list.length - 1 && isRandom === true){
+        let random_index = Number.parseInt(Math.random() * music_list.length);
+        track_index = random_index;
+    }else{
+        track_index = 0;
+    }
+    loadTrack(track_index);
+    playTrack();
+}
+function prevTrack(){
+    if(track_index > 0){
+        track_index -= 1;
+    }else{
+        track_index = music_list.length -1;
+    }
+    loadTrack(track_index);
+    playTrack();
+}
+function seekTo(){
+    let seekto = curr_track.duration * (seek_slider.value / 100);
+    curr_track.currentTime = seekto;
+}
+function setVolume(){
+    curr_track.volume = volume_slider.value / 100;
+}
+function setUpdate() {
+    if (isNaN(curr_track.duration)) return;
+
+    const progress = (curr_track.currentTime / curr_track.duration) * 100;
+    seek_slider.value = progress;
+  
+    const formatTime = (time) => {
+      const minutes = Math.floor(time / 60);
+      const seconds = Math.floor(time % 60);
+      return `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+    };
+  //The make up 0 part mainly comes from GPT
+  
+    curr_time.textContent = formatTime(curr_track.currentTime);
+    total_duration.textContent = formatTime(curr_track.duration);
+  }
