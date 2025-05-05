@@ -1,51 +1,52 @@
-const now_playing = document.querySelector('.now-playing');
-const track_art = document.querySelector('.track-art');
-const track_name = document.querySelector('.track-name');
-const track_artist = document.querySelector('.track-artist');
-const playpause_btn = document.querySelector('.playpause-track');
-const next_btn = document.querySelector('.next-track');
-const prev_btn = document.querySelector('.prev-track');
-const seek_slider = document.querySelector('.seek_slider');
-const volume_slider = document.querySelector('.volume_slider');
-const curr_time = document.querySelector('.current-time');
-const total_duration = document.querySelector('.total-duration');
-const randomIcon = document.querySelector('.fa-random');
-const curr_track = document.createElement('audio');
+let now_playing = document.querySelector('.now-playing');
+let track_art = document.querySelector('.track-art');
+let track_name = document.querySelector('.track-name');
+let track_artist = document.querySelector('.track-artist');
 
-// I asked GPT how can I make constant depends on the player's playing situation like which song is playing and if it's being paused or repeat. And It showed me the document. querySelector function that I used a lot
+let playpause_btn = document.querySelector('.playpause-track');
+let next_btn = document.querySelector('.next-track');
+let prev_btn = document.querySelector('.prev-track');
 
-const music_list = [
-  {
-    img: 'assets/images/wash over me teeks.jpeg',
-    name: 'Wash over me',
-    artist: 'Teeks',
-    music: 'assets/music/Wash-over-Me.mp3'
-  },
-];
+let seek_slider = document.querySelector('.seek_slider');
+let volume_slider = document.querySelector('.volume_slider');
+let curr_time = document.querySelector('.current-time');
+let total_duration = document.querySelector('.total-duration');
+let wave = document.getElementById('wave');
+let randomIcon = document.querySelector('.fa-random');
+let curr_track = document.createElement('audio');
 
-// Playing State
+// I asked GPT how can I make constant look at the player's playing situation like which song is playing and if it's being paused or repeat. And It showed me the document. querySelector function that I used a lot
+
+//Track Statement
 let track_index = 0;
 let isPlaying = false;
 let isRandom = false;
 let updateTimer;
 
-// initialization
-loadTrack(track_index);
 
-// Loading song
-function loadTrack(index) {
-  clearInterval(updateTimer);
-  reset();
-
-  curr_track.src = music_list[index].music;
-  curr_track.load();
-
-  track_art.style.backgroundImage = `url(${music_list[index].img})`;
-  track_name.textContent = music_list[index].name;
-  track_artist.textContent = music_list[index].artist;
-  now_playing.textContent = `Playing ${index + 1} of ${music_list.length}`;
-
-  updateTimer = setInterval(updateTime, 1000);
-  curr_track.addEventListener('ended', nextTrack);
-  // Asked GPT how to make it go to next track after this track done and it gives me the addEventListener funtion.
-}
+const music_list = [
+    {
+        img : 'asset/images/wash over me teeks.jpeg',
+        name : 'Wash over me',
+        artist : 'Teeks',
+        music : 'asset/music/Wash-over-Me.mp3'
+    },
+    {
+        img : 'asset/images/My kind of love with carmody.jpg',
+        name : 'My kind of love (with carmody)',
+        artist : 'Connor ALBERT, Carmody',
+        music : 'asset/music/My-Kind-of-Love-_with-Carmody_-_p_.mp3'
+    },
+    {
+        img : 'images/faded.png',
+        name : 'Faded',
+        artist : 'Alan Walker',
+        music : 'music/Faded.mp3'
+    },
+    {
+        img : 'images/ratherbe.jpg',
+        name : 'Rather Be',
+        artist : 'Clean Bandit',
+        music : 'music/Rather Be.mp3'
+    }
+];
