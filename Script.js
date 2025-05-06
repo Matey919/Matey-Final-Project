@@ -18,31 +18,30 @@ let curr_track = document.createElement('audio');
 //Track Statement
 let track_index = 0;
 let isPlaying = false;
-let isRandom = false;
 let updateTimer;
 
 
 const music_list = [
     {
-        img : 'asset/images/wash over me teeks.jpeg',
+        img : "url('asset/images/wash over me teeks.jpeg)",
         name : 'Wash over me',
         artist : 'Teeks',
         music : 'asset/music/Wash-over-Me.mp3'
     },
     {
-        img : 'asset/images/My kind of love with carmody.jpg',
+        img : "url('asset/images/My kind of love with carmody.jpg')",
         name : 'My kind of love (with carmody)',
         artist : 'Connor Albert, Carmody',
         music : 'asset/music/My-Kind-of-Love-_with-Carmody_-_p_.mp3'
     },
     {
-        img : 'asset/images/sober lorde.jpg',
+        img : "url('asset/images/sober lorde.jpg')",
         name : 'Sober ',
         artist : 'Lorde',
         music : 'asset/music/Lorde-Sober-_p_.mp3'
     },
     {
-        img : 'asset/images/just wanna forget you.jpg',
+        img : "url('asset/images/just wanna forget you.jpg')",
         name : 'Just wanna forget you',
         artist : 'Maro',
         music : 'asset/music/MARO-just-wanna-forget-you-_p_.mp3'
@@ -58,7 +57,8 @@ function loadTrack(track_index){
     curr_track.src = music_list[track_index].music;
     curr_track.load();
 
-    track_art.style.backgroundImage = "url(" + music_list[track_index].img + ")";
+	//track_art.style.backgroundImage = "url('asset/images/just wanna forget you.jpg')";
+    track_art.style.backgroundImage = music_list[track_index].img;
     track_name.textContent = music_list[track_index].name;
     track_artist.textContent = music_list[track_index].artist;
     now_playing.textContent = "Playing music " + (track_index + 1) + " of " + music_list.length;
@@ -84,20 +84,17 @@ function playpauseTrack(){
 function playTrack(){
     curr_track.play();
     isPlaying = true;
-    track_art.classList.add('rotate');
     playpause_btn.innerHTML = '<i class="fa fa-pause-circle fa-5x"></i>';
 }
 function pauseTrack(){
     curr_track.pause();
     isPlaying = false;
-    track_art.classList.remove('rotate');
     playpause_btn.innerHTML = '<i class="fa fa-play-circle fa-5x"></i>';
 }
 function nextTrack(){
-    if(track_index < music_list.length - 1 && isRandom === false){
+    if(track_index < music_list.length - 1){
         track_index += 1;
-    }else if(track_index < music_list.length - 1 && isRandom === true){
-        let random_index = Number.parseInt(Math.random() * music_list.length);
+    }else if(track_index < music_list.length - 1){
         track_index = random_index;
     }else{
         track_index = 0;
